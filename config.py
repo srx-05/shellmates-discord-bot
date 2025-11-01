@@ -15,7 +15,7 @@ class Config:
     
     @classmethod
     def validate(cls):
-        if not cls.TOKEN:
+        if not cls.DISCORD_TOKEN:
             raise ValueError("DISCORD_TOKEN is not set in environment variables")
         if not cls.MONGODB_URI:
             raise ValueError("MONGODB_URI is not set in environment variables")
