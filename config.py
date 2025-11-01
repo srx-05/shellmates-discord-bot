@@ -9,7 +9,7 @@ class Config:
     DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
     COMMAND_PREFIX = "/" 
     
-    # # DB Configuration
+    # DB Configuration
     DATABASE_URL = os.getenv("DATABASE_URL")
    
     @classmethod
