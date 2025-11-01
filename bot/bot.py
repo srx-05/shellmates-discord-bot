@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import logging
 from config import Config
+from database.connection import db
+
 
 
 
@@ -21,13 +23,13 @@ class DiscordBot(commands.Bot):
         )
     
     async def setup_hook(self):
-        # # Connect to MongoDB
-        # try:
-        #     db.connect()
-        #     logger.info("✓ Database connected")
-        # except Exception as e:
-        #     logger.error(f"✗ Failed to connect to database: {e}")
-        #     raise
+        
+        try:
+            db.connect()
+            logger.info("✓ Database connected")
+        except Exception as e:
+            logger.error(f"✗ Failed to connect to database: {e}")
+            raise
         
         # Load cogs
         await self.load_cogs()
@@ -63,5 +65,5 @@ class DiscordBot(commands.Bot):
             await ctx.send("❌ An error occurred while processing the command.")
     
     async def close(self):
-        # db.close()
+        db.close()
         await super().close()
