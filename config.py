@@ -6,7 +6,7 @@ load_dotenv()
 
 class Config:
     # Discord Configuration
-    DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+    TOKEN = os.getenv('DISCORD_TOKEN')
     COMMAND_PREFIX = "!" 
     
     # MongoDB Configuration
