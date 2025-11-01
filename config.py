@@ -7,7 +7,7 @@ load_dotenv()
 class Config:
     # Discord Configuration
     TOKEN = os.getenv('DISCORD_TOKEN')
-    COMMAND_PREFIX = "!" 
+    COMMAND_PREFIX = "/" 
     
     # MongoDB Configuration
     MONGODB_URI = os.getenv('MONGO_URI')
