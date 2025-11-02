@@ -1,4 +1,4 @@
-# test_connection.py
+
 from database import Database
 
 db = Database()

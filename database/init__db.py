@@ -1,8 +1,8 @@
-from connection import Database  # نستعمل الكلاس تاع الاتصال
+from connection import Database
 import os
 
 def execute_sql_file(file_path):
-    """تنفيذ أوامر SQL من ملف schema.sql"""
+
     db = Database()
     conn = db.get_connection()
     try:
@@ -11,10 +11,10 @@ def execute_sql_file(file_path):
             cursor = conn.cursor()
             cursor.execute(sql_commands)
             conn.commit()
-            print("✅ Database schema created successfully!")
+            print(" Database schema created successfully!")
             cursor.close()
     except Exception as e:
-        print(f"❌ Error while creating tables: {e}")
+        print(f"Error while creating tables: {e}")
     finally:
         db.return_connection(conn)
 
