@@ -6,16 +6,15 @@ load_dotenv()
 
 class Config:
     # Discord Configuration
-    TOKEN = os.getenv('DISCORD_TOKEN')
-    COMMAND_PREFIX = "!" 
+    DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+    COMMAND_PREFIX = "/" 
     
-    # MongoDB Configuration
-    MONGODB_URI = os.getenv('MONGO_URI')
-    MONGODB_DATABASE = os.getenv('MONGODB_DATABASE')
-    
+    # # DB Configuration
+    DATABASE_URL = os.getenv("DATABASE_URL")
+   
     @classmethod
     def validate(cls):
-        if not cls.TOKEN:
+        if not cls.DISCORD_TOKEN:
             raise ValueError("DISCORD_TOKEN is not set in environment variables")
-        if not cls.MONGODB_URI:
-            raise ValueError("MONGODB_URI is not set in environment variables")
+        if not cls.DATABASE_URL:
+            raise ValueError("DATABASE_URL is not set in environment variables")

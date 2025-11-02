@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # main.py
 from  database.connection  import Database  # الكلاس اللي عملتيه
 from  database.repositories.usersrepo import UserRepository  # مسار الملف حسب مشروعك
@@ -32,3 +33,38 @@ print("All users:", all_users)
 
 # غلق كل الاتصالات عند الانتهاء
 db.close_all_connections()
+=======
+import asyncio
+import logging
+from config import Config
+from bot.bot import DiscordBot
+from utils.helpers import setup_logging
+
+def main():
+    # Setup logging
+    setup_logging()
+    logger = logging.getLogger(__name__)
+    
+    # Validate configuration
+    try:
+        Config.validate()
+    except ValueError as e:
+        logger.error(f"Configuration error: {e}")
+        return
+    
+    # Create and run bot
+    bot = DiscordBot()
+    
+    try:
+        logger.info("Starting Discord bot...")
+        bot.run(Config.DISCORD_TOKEN)
+    except KeyboardInterrupt:
+        logger.info("Bot stopped by user")
+    except Exception as e:
+        logger.error(f"Fatal error: {e}")
+    finally:
+        logger.info("Bot shutdown complete")
+
+if __name__ == "__main__":
+    main()
+>>>>>>> 36ff42c9ed8b445e4801c64da9cf4affda811436
