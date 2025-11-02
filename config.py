@@ -6,11 +6,12 @@ load_dotenv()
 
 class Config:
     # Discord Configuration
-    DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
-    COMMAND_PREFIX = "/" 
+    DISCORD_TOKEN: str = os.getenv("DISCORD_TOKEN") or ""
+    COMMAND_PREFIX: str = "/"
+ 
     
     # DB Configuration
-    DATABASE_URL = os.getenv("DATABASE_URL")
+    DATABASE_URL: str | None = os.getenv("DATABASE_URL")
    
     @classmethod
     def validate(cls):
