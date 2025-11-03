@@ -81,4 +81,3 @@ class PostgreSQL:
 
 # global alias
 db = PostgreSQL
->>>>>>> 36ff42c9ed8b445e4801c64da9cf4affda811436
