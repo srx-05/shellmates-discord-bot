@@ -39,3 +39,28 @@ class UserRepository:
         conn.commit()
         cur.close()
         db.return_connection(conn)
+
+        
+    @staticmethod
+    def update_user(user_id, username=None, role=None):
+        """
+        Update username and/or role. Pass None to leave a field unchanged.
+        Returns the updated row.
+        """
+        db = Database()
+        conn = db.get_connection()
+        cur = conn.cursor()
+
+        cur.execute("""
+            UPDATE users
+            SET username = COALESCE(%s, username),
+                role = COALESCE(%s, role)
+            WHERE user_id = %s
+            RETURNING *;
+        """, (username, role, user_id))
+
+        updated = cur.fetchone()
+        conn.commit()
+        cur.close()
+        db.return_connection(conn)
+        return updated
