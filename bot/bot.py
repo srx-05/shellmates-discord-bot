@@ -31,7 +31,7 @@ class DiscordBot(commands.Bot):
         
         # Connect to DB
         try:
-            # await db.connect()
+            await db.get_connection()
             logger.info("✓ Database connected")
         except Exception as e:
             logger.error(f"✗ Database connection failed: {e}")
@@ -50,5 +50,5 @@ class DiscordBot(commands.Bot):
         logger.info(f"Connected to {len(self.guilds)} guild(s)")
 
     async def close(self):
-        # db.close()
+        db.close_all_connections()
         await super().close()

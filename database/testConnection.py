@@ -1,7 +1,6 @@
 
-from database import Database
+from database.connection import db
 
-db = Database()
 try:
     conn = db.get_connection()
     cursor = conn.cursor()
