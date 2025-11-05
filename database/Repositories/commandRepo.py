@@ -59,3 +59,77 @@ class CommandRepository:
         conn.commit()
         cur.close()
         db.return_connection(conn)
+
+# ---------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
+
+    @staticmethod
+    def get_command(command_name):
+        db = Database()
+        conn = db.get_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM commands WHERE command_name = %s;", (command_name,))
+        cmd = cur.fetchone()
+        cur.close()
+        db.return_connection(conn)
+        return cmd
+    
+    
+    @staticmethod
+    def update_command(command_name, description=None, enabled=None):
+        """
+        Update provided fields (pass None to leave unchanged). Returns updated row.
+        """
+        db = Database()
+        conn = db.get_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            UPDATE commands
+            SET description = COALESCE(%s, description),
+                enabled = COALESCE(%s, enabled)
+            WHERE command_name = %s
+            RETURNING *;
+        """, (description, enabled, command_name))
+        updated = cur.fetchone()
+        conn.commit()
+        cur.close()
+        db.return_connection(conn)
+        return updated
+    
+    
+    @staticmethod
+    def get_top_commands(limit=10):
+        """Return commands ordered by usage_count desc."""
+        db = Database()
+        conn = db.get_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT command_name, usage_count
+            FROM commands
+            ORDER BY COALESCE(usage_count, 0) DESC
+            LIMIT %s;
+        """, (limit,))
+        rows = cur.fetchall()
+        cur.close()
+        db.return_connection(conn)
+        return rows
+    
+    
+    @staticmethod
+    def search_commands(term, limit=50, offset=0):
+        """Simple search on command_name and description."""
+        db = Database()
+        conn = db.get_connection()
+        cur = conn.cursor()
+        like = f"%{term}%"
+        cur.execute("""
+            SELECT * FROM commands
+            WHERE command_name ILIKE %s OR description ILIKE %s
+            ORDER BY command_name ASC
+            LIMIT %s OFFSET %s;
+        """, (like, like, limit, offset))
+        rows = cur.fetchall()
+        cur.close()
+        db.return_connection(conn)
+        return rows
