@@ -1,17 +1,23 @@
 from database.connection import Database
 
+
 class EventRepository:
     @staticmethod
-    def create_event(title, description, event_date, created_by, channel_id, message_id):
+    def create_event(
+        title, description, event_date, created_by, channel_id, message_id
+    ):
         db = Database()
         conn = db.get_connection()
         cur = conn.cursor()
 
-        cur.execute("""
+        cur.execute(
+            """
             INSERT INTO events (title, description, event_date, created_by, channel_id, message_id)
             VALUES (%s, %s, %s, %s, %s, %s)
             RETURNING *;
-        """, (title, description, event_date, created_by, channel_id, message_id))
+        """,
+            (title, description, event_date, created_by, channel_id, message_id),
+        )
 
         event = cur.fetchone()
         conn.commit()
@@ -24,7 +30,9 @@ class EventRepository:
         db = Database()
         conn = db.get_connection()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM events WHERE event_date > NOW() ORDER BY event_date ASC;")
+        cur.execute(
+            "SELECT * FROM events WHERE event_date > NOW() ORDER BY event_date ASC;"
+        )
         events = cur.fetchall()
         cur.close()
         db.return_connection(conn)
@@ -40,9 +48,9 @@ class EventRepository:
         cur.close()
         db.return_connection(conn)
 
-# ---------------------------------------------------------------------------------------------
-# ---------------------------------------------------------------------------------------------
-# ---------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------------------
 
     @staticmethod
     def get_event(event_id):
@@ -56,14 +64,22 @@ class EventRepository:
         return row
 
     @staticmethod
-    def update_event(event_id, title=None, description=None, event_date=None, channel_id=None, message_id=None):
+    def update_event(
+        event_id,
+        title=None,
+        description=None,
+        event_date=None,
+        channel_id=None,
+        message_id=None,
+    ):
         """
         Update any provided fields (pass None to leave unchanged). Returns updated row.
         """
         db = Database()
         conn = db.get_connection()
         cur = conn.cursor()
-        cur.execute("""
+        cur.execute(
+            """
             UPDATE events
             SET title = COALESCE(%s, title),
                 description = COALESCE(%s, description),
@@ -72,7 +88,9 @@ class EventRepository:
                 message_id = COALESCE(%s, message_id)
             WHERE event_id = %s
             RETURNING *;
-        """, (title, description, event_date, channel_id, message_id, event_id))
+        """,
+            (title, description, event_date, channel_id, message_id, event_id),
+        )
         updated = cur.fetchone()
         conn.commit()
         cur.close()
@@ -85,19 +103,25 @@ class EventRepository:
         conn = db.get_connection()
         cur = conn.cursor()
         if upcoming_only:
-            cur.execute("""
+            cur.execute(
+                """
                 SELECT * FROM events
                 WHERE channel_id = %s AND event_date > NOW()
                 ORDER BY event_date ASC
                 LIMIT %s OFFSET %s;
-            """, (channel_id, limit, offset))
+            """,
+                (channel_id, limit, offset),
+            )
         else:
-            cur.execute("""
+            cur.execute(
+                """
                 SELECT * FROM events
                 WHERE channel_id = %s
                 ORDER BY event_date DESC
                 LIMIT %s OFFSET %s;
-            """, (channel_id, limit, offset))
+            """,
+                (channel_id, limit, offset),
+            )
         rows = cur.fetchall()
         cur.close()
         db.return_connection(conn)
@@ -109,19 +133,25 @@ class EventRepository:
         conn = db.get_connection()
         cur = conn.cursor()
         if upcoming_only:
-            cur.execute("""
+            cur.execute(
+                """
                 SELECT * FROM events
                 WHERE created_by = %s AND event_date > NOW()
                 ORDER BY event_date ASC
                 LIMIT %s OFFSET %s;
-            """, (created_by, limit, offset))
+            """,
+                (created_by, limit, offset),
+            )
         else:
-            cur.execute("""
+            cur.execute(
+                """
                 SELECT * FROM events
                 WHERE created_by = %s
                 ORDER BY event_date DESC
                 LIMIT %s OFFSET %s;
-            """, (created_by, limit, offset))
+            """,
+                (created_by, limit, offset),
+            )
         rows = cur.fetchall()
         cur.close()
         db.return_connection(conn)
@@ -132,8 +162,10 @@ class EventRepository:
         db = Database()
         conn = db.get_connection()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM events WHERE event_date <= NOW() ORDER BY event_date DESC LIMIT %s OFFSET %s;",
-                    (limit, offset))
+        cur.execute(
+            "SELECT * FROM events WHERE event_date <= NOW() ORDER BY event_date DESC LIMIT %s OFFSET %s;",
+            (limit, offset),
+        )
         rows = cur.fetchall()
         cur.close()
         db.return_connection(conn)

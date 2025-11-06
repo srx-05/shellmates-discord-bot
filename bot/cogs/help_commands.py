@@ -1,67 +1,61 @@
 import discord
 from discord.ext import commands
-from discord import app_commands
+from database.Repositories.commandRepo import CommandRepository
 
-class HelpCommand(commands.Cog):
+
+class HelpCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-        # Temporary command list
-        self.commands_data = [
-            {
-                "name": "fact",
-                "description": "Sends a random cybersecurity fact.",
-                "usage": "/fact",
-            },
-            {
-                "name": "event",
-                "description": "Displays upcoming club events.",
-                "usage": "/event",
-            },
-            {
-                "name": "quiz",
-                "description": "Starts a cybersecurity quiz based on posted facts.",
-                "usage": "/quiz",
-            },
-            {
-                "name": "help",
-                "description": "Shows a list of all available commands.",
-                "usage": "/help [command]",
-            }
-        ]
-
     @commands.command(name="help")
-    async def help(self, ctx, command_name: str = ""):
-        # If user requests help for a specific command
-        if command_name:
-            command = next((cmd for cmd in self.commands_data if cmd["name"] == command_name), None)
-            if command:
-                embed = discord.Embed(
-                    title=f"📘 Help: `{command['name']}`",
-                    description=command["description"],
-                    color=discord.Color.blue()
+    async def help_command(self, ctx, command_name: str = ""):
+        try:
+            if command_name:
+                cmd = CommandRepository.get_command(command_name)
+                if cmd:
+                    embed = discord.Embed(
+                        title=f"📘 Help: `{cmd[0]}`",
+                        description=cmd[1] or "No description provided.",
+                        color=discord.Color.blurple(),
+                    )
+                    embed.add_field(
+                        name="Category", value=cmd[4] or "General", inline=True
+                    )
+                    await ctx.send(embed=embed)
+                else:
+                    await ctx.send(
+                        f"❌ No command found with the name `{command_name}`."
+                    )
+                return
+
+            all_commands = CommandRepository.get_all_commands()
+            if not all_commands:
+                await ctx.send("No commands found in the database.")
+                return
+
+            categories = {}
+            for cmd in all_commands:
+                category = cmd[4] or "General"
+                categories.setdefault(category, []).append(cmd)
+
+            embed = discord.Embed(
+                title="📘 Shellmates Bot Commands",
+                description="Here are all available commands grouped by category:",
+                color=discord.Color.green(),
+            )
+
+            for category, cmds in categories.items():
+                cmd_list = "\n".join(
+                    [f"`{c[0]}` - {c[1] or 'No description'}" for c in cmds]
                 )
-                embed.add_field(name="Usage", value=f"`{command['usage']}`", inline=False)
-                await ctx.send(embed=embed)
-            else:
-                await ctx.send(f"❌ No command called `{command_name}` found.", ephemeral=True)
-            return
+                embed.add_field(name=f"📂 {category}", value=cmd_list, inline=False)
 
-        # General help embed
-        embed = discord.Embed(
-            title="🤖 Shellmates Bot Commands",
-            description="Here’s a list of all available commands:",
-            color=discord.Color.blurple()
-        )
+            await ctx.send(embed=embed)
 
-        commands_description = "\n".join(
-            [f"`{cmd['usage']}` — {cmd['description']}" for cmd in self.commands_data]
-        )
+        except Exception as e:
+            await ctx.send(f"⚠️ Error loading help: {e}")
+            print(f"[HelpCommands Error] {e}")
 
-        embed.add_field(name="Commands", value=commands_description, inline=False)
-        embed.set_footer(text="Use /help <command> for more details about a specific command.")
-
-        await ctx.send(embed=embed)
 
 async def setup(bot):
-    await bot.add_cog(HelpCommand(bot))
+    await bot.add_cog(HelpCommands(bot))

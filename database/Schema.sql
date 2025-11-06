@@ -61,6 +61,8 @@ CREATE TABLE commands (
     description TEXT,
     usage_count INTEGER DEFAULT 0,
     last_used TIMESTAMP
+    category TEXT DEFAULT 'General'
+
 );
 
 CREATE TABLE banned_words (

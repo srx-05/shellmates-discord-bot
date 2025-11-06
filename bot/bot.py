@@ -7,6 +7,7 @@ from database.connection import db
 
 logger = logging.getLogger(__name__)
 
+
 class DiscordBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.default()
@@ -15,20 +16,20 @@ class DiscordBot(commands.Bot):
         intents.message_content = True
 
         super().__init__(
-            command_prefix=Config.COMMAND_PREFIX,
-            intents=intents,
-            help_command=None
+            command_prefix=Config.COMMAND_PREFIX, intents=intents, help_command=None
         )
 
         # list of cogs to load
         self.initial_extensions = [
             "bot.cogs.help_commands",
             "bot.cogs.cyberfacts_commands",
-            "bot.cogs.events_commands"
+            "bot.cogs.events_commands",
+            "bot.cogs.command_management",
+            "bot.cogs.error_handler",
         ]
 
     async def setup_hook(self):
-        
+
         # Connect to DB
         try:
             await db.get_connection()
@@ -43,7 +44,6 @@ class DiscordBot(commands.Bot):
                 logger.info(f"✓ Loaded cog: {ext}")
             except Exception as e:
                 logger.error(f"✗ Failed to load {ext}: {e}")
-
 
     async def on_ready(self):
         logger.info(f"Bot ready! Logged in as {self.user} (ID: {self.user})")
