@@ -26,6 +26,8 @@ class DiscordBot(commands.Bot):
             "bot.cogs.events_commands",
             "bot.cogs.command_management",
             "bot.cogs.error_handler",
+            "bot.cogs.banned_words",
+            "bot.cogs.quiz_commands",
         ]
 
     async def setup_hook(self):
