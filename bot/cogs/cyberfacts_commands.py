@@ -1,24 +1,29 @@
 import discord
 from discord.ext import commands
-import random
+from database.Repositories.factRepo import FactRepository
 
-class Facts(commands.Cog): 
-    def __init__(self, bot):
+
+class CyberFact(commands.Cog):
+    def init(self, bot):
         self.bot = bot
 
-    # --- Example dataset ---
-    facts = [
-        "The first computer virus was created in 1986 and was called Brain.",
-        "Phishing accounts for over 90% of all data breaches.",
-        "Cybersecurity spending exceeded $200 billion globally in 2024.",
-        "The word 'hacker' originally meant a skilled programmer, not a criminal."
-    ]
-
-    @commands.command(name="fact")
+    @commands.command(name="cyberfact")
     async def cyberfact(self, ctx):
-        fact = random.choice(self.facts)
-        await ctx.send(f"💡 {fact}")
+        try:
+            fact = FactRepository.get_random_fact()
+            if fact:
+                content = fact[1]
+                source_url = fact[3]
+                message = f"💡 {content}"
+                if source_url:
+                    message += f"\n🔗 Source: {source_url}"
+                await ctx.send(message)
+            else:
+                await ctx.send("⚠️ No cyber facts found in the database yet.")
+        except Exception as e:
+            print(f"[ERROR] cyberfact command: {e}")
+            await ctx.send("❌ An error occurred while fetching a cyber fact.")
 
 
 async def setup(bot):
-    await bot.add_cog(Facts(bot))
+    await bot.add_cog(CyberFact(bot))
