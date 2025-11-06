@@ -1,16 +1,20 @@
 from database.connection import Database
 
+
 class FactRepository:
     @staticmethod
     def add_fact(content, source_type, source_url, added_by):
         db = Database()
         conn = db.get_connection()
         cur = conn.cursor()
-        cur.execute("""
+        cur.execute(
+            """
             INSERT INTO cyber_facts (content, source_type, source_url, added_by)
             VALUES (%s, %s, %s, %s)
             RETURNING *;
-        """, (content, source_type, source_url, added_by))
+        """,
+            (content, source_type, source_url, added_by),
+        )
         fact = cur.fetchone()
         conn.commit()
         cur.close()
@@ -28,28 +32,30 @@ class FactRepository:
         db.return_connection(conn)
         return fact
 
+    # ---------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------------------
 
-# ---------------------------------------------------------------------------------------------
-# ---------------------------------------------------------------------------------------------
-# ---------------------------------------------------------------------------------------------
-
-    @staticmethod
-    def get_fact(fact_id):
-        db = Database()
-        conn = db.get_connection()
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM cyber_facts WHERE fact_id = %s;", (fact_id,))
-        row = cur.fetchone()
-        cur.close()
-        db.return_connection(conn)
-        return row
+    # @staticmethod
+    # def get_fact(fact_id):
+    #     db = Database()
+    #     conn = db.get_connection()
+    #     cur = conn.cursor()
+    #     cur.execute("SELECT * FROM cyber_facts WHERE fact_id = %s;", (fact_id,))
+    #     row = cur.fetchone()
+    #     cur.close()
+    #     db.return_connection(conn)
+    #     return row
 
     @staticmethod
     def get_facts(limit=50, offset=0):
         db = Database()
         conn = db.get_connection()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM cyber_facts ORDER BY fact_id DESC LIMIT %s OFFSET %s;", (limit, offset))
+        cur.execute(
+            "SELECT * FROM cyber_facts ORDER BY fact_id DESC LIMIT %s OFFSET %s;",
+            (limit, offset),
+        )
         rows = cur.fetchall()
         cur.close()
         db.return_connection(conn)
@@ -60,8 +66,10 @@ class FactRepository:
         db = Database()
         conn = db.get_connection()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM cyber_facts WHERE added_by = %s ORDER BY fact_id DESC LIMIT %s OFFSET %s;",
-                    (added_by, limit, offset))
+        cur.execute(
+            "SELECT * FROM cyber_facts WHERE added_by = %s ORDER BY fact_id DESC LIMIT %s OFFSET %s;",
+            (added_by, limit, offset),
+        )
         rows = cur.fetchall()
         cur.close()
         db.return_connection(conn)
@@ -72,14 +80,17 @@ class FactRepository:
         db = Database()
         conn = db.get_connection()
         cur = conn.cursor()
-        cur.execute("""
+        cur.execute(
+            """
             UPDATE cyber_facts
             SET content = COALESCE(%s, content),
                 source_type = COALESCE(%s, source_type),
                 source_url = COALESCE(%s, source_url)
             WHERE fact_id = %s
             RETURNING *;
-        """, (content, source_type, source_url, fact_id))
+        """,
+            (content, source_type, source_url, fact_id),
+        )
         updated = cur.fetchone()
         conn.commit()
         cur.close()
@@ -103,8 +114,10 @@ class FactRepository:
         conn = db.get_connection()
         cur = conn.cursor()
         like = f"%{term}%"
-        cur.execute("SELECT * FROM cyber_facts WHERE content ILIKE %s ORDER BY fact_id DESC LIMIT %s OFFSET %s;",
-                    (like, limit, offset))
+        cur.execute(
+            "SELECT * FROM cyber_facts WHERE content ILIKE %s ORDER BY fact_id DESC LIMIT %s OFFSET %s;",
+            (like, limit, offset),
+        )
         rows = cur.fetchall()
         cur.close()
         db.return_connection(conn)
