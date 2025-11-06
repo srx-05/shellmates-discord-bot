@@ -17,7 +17,7 @@ class CommandManagement(commands.Cog):
 
     @commands.command(name="add_command")
     async def add_command(
-        self, ctx, name: str, category: str = "General", *, description: str = ""
+        self, ctx, name: str, category: str = "General", *, description: str
     ):
         if not self.has_allowed_role(ctx.author.roles):
             await ctx.send("❌ You don't have permission to add commands.")
