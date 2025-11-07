@@ -21,12 +21,12 @@ A feature-rich Discord bot built with Python and discord.py for community manage
 
 ### 📚 Cyber Facts
 - **Knowledge Database**: Share and store interesting cyber security facts
-- **User Contributions**: Community-driven fact submissions
 - **Categorized Content**: Organized fact repository
 
 ### 🛠️ Command Management
 - **Usage Tracking**: Monitor command popularity and usage
 - **Dynamic Help System**: Contextual help commands
+- **Command Database**: Manage and update command descriptions dynamically
 - **Error Handling**: Robust error handling and user feedback
 
 ## 🎮 Available Commands
@@ -61,6 +61,12 @@ A feature-rich Discord bot built with Python and discord.py for community manage
 -  **/stop_reminders** - Stop reminder service
 
 -  **/cleanup_reminders** - Clean up expired reminders
+  
+-  **/add_command <name> [category] <description>** - Add new command to database
+
+-  **/update_command <name> <description>** - Update command description
+
+ - **/delete_command <name>** - Delete command from database
 
 ## 🏗️ Project Structure
 ```
