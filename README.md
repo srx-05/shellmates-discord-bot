@@ -1,1 +1,92 @@
-# shellmates-discord-bot
+# 🤖 Shellmates Discord Bot
+
+A feature-rich Discord bot built with Python and discord.py for community management, moderation, and engagement.
+
+## 🚀 Features
+
+### 🛡️ Moderation
+- **Banned Words System**: Automatically detect and delete messages containing banned words
+- **Role-based Permissions**: Restrict commands to Admin/Mod roles
+- **Auto Message Filtering**: Real-time message monitoring and filtering
+
+### 🎯 Events & Reminders
+- **Event Management**: Create, list, and manage community events
+- **Smart Reminders**: Automatic DM reminders for upcoming events
+- **Customizable Timing**: Set reminders for any time before events
+
+### ❓ Interactive Quiz System
+- **Multiple Difficulties**: Easy, medium, and hard quiz questions
+- **Points & Leaderboard**: Earn points and compete on the leaderboard
+- **Cyber Security Focus**: Educational content about cyber security
+
+### 📚 Cyber Facts
+- **Knowledge Database**: Share and store interesting cyber security facts
+- **User Contributions**: Community-driven fact submissions
+- **Categorized Content**: Organized fact repository
+
+### 🛠️ Command Management
+- **Usage Tracking**: Monitor command popularity and usage
+- **Dynamic Help System**: Contextual help commands
+- **Error Handling**: Robust error handling and user feedback
+
+## 🎮 Available Commands
+### 👥 For All Users
+- **/quiz [difficulty]** - Take a cyber security quiz
+
+- **/leaderboard** - View quiz points leaderboard
+
+- **/events** - List upcoming events
+
+- **/past_events** - Show past events
+
+- **/remind_me <event_id> [minutes]** - Get reminders for events
+
+- **/my_reminders** - View your active reminders
+
+- **/reminder_status** - Check reminder service status
+
+### 🛡️ For Admin/Mod Only
+- **/banword <word>** - Add word to banned list
+
+- **/unbanword <word>** - Remove word from banned list
+
+- **/listbanned** - Show all banned words
+
+-  **/add_event <title> <date> <time> <description>** - Create new event
+
+-  **/remove_event <id/title>** - Delete an event
+
+-  **/start_reminders** - Start reminder service
+
+-  **/stop_reminders** - Stop reminder service
+
+-  **/cleanup_reminders** - Clean up expired reminders
+
+## 🏗️ Project Structure
+```
+shellmates-discord-bot/
+├── bot/
+│ ├── cogs/
+│ │ ├── banned_words.py # Word filtering system
+│ │ ├── cyberfacts_commands.py # Fact management
+│ │ ├── events_commands.py # Event creation/management
+│ │ ├── event_reminder.py # Automatic reminders
+│ │ ├── quiz_commands.py # Quiz system
+│ │ ├── command_management.py # Command analytics
+│ │ ├── help_commands.py # Help system
+│ │ └── error_handler.py # Error management
+│ └── bot.py # Main bot class
+├── database/
+│ ├── Repositories/
+│ │ ├── bannedwordRepo.py # Banned words data layer
+│ │ ├── cyberfactsRepo.py # Facts data layer
+│ │ ├── eventRepo.py # Events data layer
+│ │ ├── EventReminderRepo.py # Reminders data layer
+│ │ ├── quizRepo.py # Quiz data layer
+│ │ └── userRepo.py # User management
+│ ├── connection.py # Database connection pool
+│ └── init.py
+├── config.py # Configuration settings
+├── main.py # Application entry point
+└── requirements.txt # Python dependencies
+```
