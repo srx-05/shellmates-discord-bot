@@ -80,7 +80,7 @@ class CommandRepository:
         return cmd
 
     @staticmethod
-    def update_command(command_name, description=None, enabled=None, category=None):
+    def update_command(command_name, description=None, category=None):
         """
         Update provided fields (pass None to leave unchanged). Returns updated row.
         """
@@ -91,12 +91,11 @@ class CommandRepository:
             """
             UPDATE commands
             SET description = COALESCE(%s, description),
-                enabled = COALESCE(%s, enabled),
                 category = COALESCE(%s, category)
             WHERE command_name = %s
             RETURNING *;
         """,
-            (description, enabled, category, command_name),
+            (description, category, command_name),
         )
         updated = cur.fetchone()
         conn.commit()
