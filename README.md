@@ -67,26 +67,26 @@ A feature-rich Discord bot built with Python and discord.py for community manage
 shellmates-discord-bot/
 ├── bot/
 │ ├── cogs/
-│ │ ├── banned_words.py # Word filtering system
-│ │ ├── cyberfacts_commands.py # Fact management
-│ │ ├── events_commands.py # Event creation/management
-│ │ ├── event_reminder.py # Automatic reminders
-│ │ ├── quiz_commands.py # Quiz system
-│ │ ├── command_management.py # Command analytics
-│ │ ├── help_commands.py # Help system
-│ │ └── error_handler.py # Error management
+│ │ ├── banned_words.py 
+│ │ ├── cyberfacts_commands.py 
+│ │ ├── events_commands.py 
+│ │ ├── event_reminder.py 
+│ │ ├── quiz_commands.py 
+│ │ ├── command_management.py =
+│ │ ├── help_commands.py =
+│ │ └── error_handler.py 
 │ └── bot.py # Main bot class
 ├── database/
 │ ├── Repositories/
-│ │ ├── bannedwordRepo.py # Banned words data layer
-│ │ ├── cyberfactsRepo.py # Facts data layer
-│ │ ├── eventRepo.py # Events data layer
-│ │ ├── EventReminderRepo.py # Reminders data layer
-│ │ ├── quizRepo.py # Quiz data layer
-│ │ └── userRepo.py # User management
-│ ├── connection.py # Database connection pool
+│ │ ├── bannedwordRepo.py 
+│ │ ├── cyberfactsRepo.py 
+│ │ ├── eventRepo.py 
+│ │ ├── EventReminderRepo.py 
+│ │ ├── quizRepo.py
+│ │ └── userRepo.py 
+│ ├── connection.py 
 │ └── init.py
-├── config.py # Configuration settings
+├── config.py
 ├── main.py # Application entry point
 └── requirements.txt # Python dependencies
 ```
