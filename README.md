@@ -30,43 +30,36 @@ A feature-rich Discord bot built with Python and discord.py for community manage
 - **Error Handling**: Robust error handling and user feedback
 
 ## 🎮 Available Commands
-### 👥 For All Users
-- **/quiz [difficulty]** - Take a cyber security quiz
+### 👥 User Commands
+- `/quiz [difficulty]` - Take a cyber security quiz
+- `/leaderboard` - View quiz points leaderboard
+- `/events` - List upcoming events
+- `/past_events` - Show past events
+- `/remind_me <event_id> [minutes]` - Get reminders for events
+- `/my_reminders` - View your active reminders
+- `/reminder_status` - Check reminder service status
+- `/checkword <word>` - Check if a word is banned
 
-- **/leaderboard** - View quiz points leaderboard
+### 🛡️ Admin/Mod Commands
 
-- **/events** - List upcoming events
+#### Moderation
+- `/banword <word>` - Add word to banned list
+- `/unbanword <word>` - Remove word from banned list
+- `/listbanned` - Show all banned words
 
-- **/past_events** - Show past events
+#### Event Management
+- `/add_event <title> <date> <time> <description>` - Create new event
+- `/remove_event <event_id|title>` - Delete an event
 
-- **/remind_me <event_id> [minutes]** - Get reminders for events
+#### Reminder Management
+- `/start_reminders` - Start reminder service
+- `/stop_reminders` - Stop reminder service
+- `/cleanup_reminders` - Clean up expired reminders
 
-- **/my_reminders** - View your active reminders
-
-- **/reminder_status** - Check reminder service status
-
-### 🛡️ For Admin/Mod Only
-- **/banword <word>** - Add word to banned list
-
-- **/unbanword <word>** - Remove word from banned list
-
-- **/listbanned** - Show all banned words
-
--  **/add_event <title> <date> <time> <description>** - Create new event
-
--  **/remove_event <id/title>** - Delete an event
-
--  **/start_reminders** - Start reminder service
-
--  **/stop_reminders** - Stop reminder service
-
--  **/cleanup_reminders** - Clean up expired reminders
-  
--  **/add_command <name> [category] <description>** - Add new command to database
-
--  **/update_command <name> <description>** - Update command description
-
- - **/delete_command <name>** - Delete command from database
+#### Command Management
+- `/add_command <name> [category] <description>` - Add new command to database
+- `/update_command <name> <description>` - Update command description
+- `/delete_command <name>` - Delete command from database
 
 ## 🏗️ Project Structure
 ```
