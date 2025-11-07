@@ -38,7 +38,6 @@ A feature-rich Discord bot built with Python and discord.py for community manage
 - `/remind_me <event_id> [minutes]` - Get reminders for events
 - `/my_reminders` - View your active reminders
 - `/reminder_status` - Check reminder service status
-- `/checkword <word>` - Check if a word is banned
 
 ### 🛡️ Admin/Mod Commands
 
