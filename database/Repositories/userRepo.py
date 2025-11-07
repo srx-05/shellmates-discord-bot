@@ -89,13 +89,16 @@ class UserRepository:
         if not user:
             cur.execute(
                 """
-                INSERT INTO users (user_id, username, joined_at, points, level)
-                VALUES (%s, %s, NOW(), 0, 1)
-                ON CONFLICT (user_id) DO NOTHING;
-                """,
+            INSERT INTO users (user_id, username, join_date, points, level)
+            VALUES (%s, %s, NOW(), 0, 1)
+            ON CONFLICT (user_id) DO NOTHING;
+            """,
                 (str(user_id), username),
             )
             conn.commit()
+            print(
+                f"✅ New user created: {username} ({user_id})"
+            )  # Optional: Add logging
 
         cur.close()
         db.return_connection(conn)

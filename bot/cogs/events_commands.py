@@ -11,25 +11,25 @@ class Events(commands.Cog):
         self.bot = bot
         self.repo = EventRepository()
 
-    # ------------------------------------------------------------
-    # Helper: Check if user has allowed role
-    # ------------------------------------------------------------
     def has_allowed_role(self, user_roles):
         allowed_lower = [role.lower() for role in ALLOWED_ROLES]
         return any(role.name.lower() in allowed_lower for role in user_roles)
 
-    # ------------------------------------------------------------
-    # !add_event <title> <date> <description>
-    # ------------------------------------------------------------
     @commands.command(name="add_event", help="Add a new event (Admin/Mod only).")
-    async def add_event(self, ctx, title: str, date: str, *, description: str):
+    async def add_event(
+        self, ctx, title: str, date: str, time: str, *, description: str
+    ):
+
         if not self.has_allowed_role(ctx.author.roles):
             await ctx.send("❌ You don't have permission to add events.")
             return
 
         try:
-            # Parse the date string to datetime
-            event_date = datetime.fromisoformat(date)
+            # Combine date and time into one datetime string
+            datetime_str = f"{date} {time}"
+
+            # Parse the combined datetime string
+            event_date = datetime.fromisoformat(datetime_str)
 
             # Check for duplicates
             existing_events = self.repo.get_upcoming_events()
@@ -58,14 +58,12 @@ class Events(commands.Cog):
 
         except ValueError:
             await ctx.send(
-                "⚠️ Invalid date format! Use `YYYY-MM-DDTHH:MM` (ISO format)."
+                '⚠️ Invalid date/time format! Use: `!add_event "Title" "YYYY-MM-DD" "HH:MM" description`\n'
+                'Example: `!add_event "Team Meeting" "2024-12-25" "14:30" Weekly team sync`'
             )
         except Exception as e:
             await ctx.send(f"❌ Failed to create event: {e}")
 
-    # ------------------------------------------------------------
-    # !remove_event <event_id or title>
-    # ------------------------------------------------------------
     @commands.command(name="remove_event", help="Remove an event by ID or title.")
     async def remove_event(self, ctx, *, identifier: str):
         if not self.has_allowed_role(ctx.author.roles):
