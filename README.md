@@ -61,7 +61,7 @@ A feature-rich Discord bot built with Python and discord.py for community manage
 - `/update_command <name> <description>` - Update command description
 - `/delete_command <name>` - Delete command from database
 
-### Cyber Facts
+#### Cyber Facts
 - `/addcyberfact <fact>` - Contribute a new fact to the database
 
 ## 🏗️ Project Structure
