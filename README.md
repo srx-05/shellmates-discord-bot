@@ -38,6 +38,7 @@ A feature-rich Discord bot built with Python and discord.py for community manage
 - `/remind_me <event_id> [minutes]` - Get reminders for events
 - `/my_reminders` - View your active reminders
 - `/reminder_status` - Check reminder service status
+- `/cyberfacts` - Browse through cyber security facts
 
 ### 🛡️ Admin/Mod Commands
 
@@ -59,6 +60,9 @@ A feature-rich Discord bot built with Python and discord.py for community manage
 - `/add_command <name> [category] <description>` - Add new command to database
 - `/update_command <name> <description>` - Update command description
 - `/delete_command <name>` - Delete command from database
+
+### Cyber Facts
+- `/addcyberfact <fact>` - Contribute a new fact to the database
 
 ## 🏗️ Project Structure
 ```
